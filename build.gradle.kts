@@ -5,8 +5,8 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version ("1.1.0")
 }
 
-group = "com.focustech.aigc"
-version = "0.0.2-SNAPSHOT"
+group = "ee.carlrobert"
+version = "1.1.6"
 
 repositories {
     mavenCentral()
@@ -38,8 +38,8 @@ dependencies {
 nexusPublishing {
     repositories {
         sonatype {
-            nexusUrl.set(uri("http://maven.mic.com/nexus/content/groups/public"))
-            snapshotRepositoryUrl.set(uri("http://maven.mic.com/nexus/content/groups/public"))
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
     }
 }
@@ -59,32 +59,33 @@ publishing {
             pom {
                 name.set("OpenAI Client")
                 description.set("Java http client wrapped around the OkHttp3 library")
-                url.set("https://github.com/liangalei-2580/openai-client.git")
-//                licenses {
-//                    license {
-//                        name.set("The Apache License, Version 2.0")
-//                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-//                    }
-//                }
-                developers {
-                    developer {
-                        id.set("lianghonglei")
-                        name.set("lianghonglei")
-                        email.set("lianghonglei@focuschina.com")
+                url.set("https://github.com/carlrobertoh/openai-client")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
                     }
                 }
-//                scm {
-//                    url.set("http://git.vemic.com/RDCWEB/APLAN/aigc/aigc-code-openai-client.git")
-//                    connection.set("http://git.vemic.com/RDCWEB/APLAN/aigc/aigc-code-openai-client.git")
-//                }
+                developers {
+                    developer {
+                        id.set("linnupuu")
+                        name.set("Carl-Robert Linnupuu")
+                        email.set("carlrobertoh@gmail.com")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/carlrobertoh/openai-client")
+                    connection.set("scm:git://github.com/carlrobertoh/openai-client.git")
+                    developerConnection.set("scm:git://github.com/carlrobertoh/openai-client.git")
+                }
             }
         }
     }
 }
 
 signing {
-    val signingKey = "cplan-manager"
-    val signingPassword = "123456a"
+    val signingKey = (findProperty("signingKey") ?: "") as String
+    val signingPassword = (findProperty("signingPassword") ?: "") as String
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications["mavenJava"])
 }
